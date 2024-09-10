@@ -47,25 +47,13 @@ jobs:
         run: |
           poetry install
 
-      - name: Run black
-        run: |
-          poetry run black . --check
-
-      - name: Run isort
-        run: |
-          poetry run isort . --check --diff
-
-      - name: Run Mypy
-        run: |
-          poetry run mypy .
-
       - name: Wait for PostgreSQL
         run: |
           until pg_isready -h localhost -p ${{ secrets.DB_PORT }} -U ${{ secrets.PG_USER }}; do
             sleep 1
           done
 
-      - name: Test python project
+      - name: Run tests
         run: |
-          poetry run coverage run manage.py test
-          poetry run coverage report -m
+          chmod +x test.sh
+          ./test.sh
