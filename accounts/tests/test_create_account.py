@@ -8,7 +8,7 @@ class TestCreateAccount(TestCase):
 
     def test_create_account(self) -> None:
         user = User.objects.create_user(email="test@test.com", password="Qwer1234!")
-        account = Account(
+        account = Account.objects.create(
             user_id=user.pk,
             account_type="savings",
             account_number="1234567812345678",
