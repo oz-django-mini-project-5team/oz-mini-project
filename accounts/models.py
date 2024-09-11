@@ -19,4 +19,4 @@ class Account(models.Model):
     account_number = models.CharField(max_length=16, unique=True)
     bank_code = models.CharField(max_length=10, choices=BankCodes.choices)
     account_type = models.CharField(max_length=20, choices=AccountTypes.choices)
-    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    balance = models.DecimalField(max_digits=14, decimal_places=2, default=0)

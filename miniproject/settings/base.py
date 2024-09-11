@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     # own apps
     "users.apps.UsersConfig",
     "accounts.apps.AccountsConfig",
+    "transaction_history.apps.TransactionHistoryConfig",
 ]
 
 MIDDLEWARE = [
