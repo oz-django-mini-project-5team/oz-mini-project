@@ -23,6 +23,7 @@
 </div> 
 
 ## ERD
+<img src="static/readme/oz-mini-project-erd.png" style="width:650px">
 
 ## API 명세서
 

@@ -64,6 +64,16 @@ jobs:
           until pg_isready -h localhost -p ${{ secrets.DB_PORT }} -U ${{ secrets.PG_USER }}; do
             sleep 1
           done
+          
+      - name: Check working directory
+        run: |
+          pwd
+          ls -la
+
+      - name: Run Django Migration
+        run: |
+          poetry run python manage.py makemigrations
+          poetry run python manage.py migrate
 
       - name: Test python project
         run: |
