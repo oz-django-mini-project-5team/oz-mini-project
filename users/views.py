@@ -17,7 +17,6 @@ class UserRegisterAPIView(GenericAPIView[User]):
 
     permission_classes = (AllowAny,)
     serializer_class = UserRegisterSerializer
-    user_service = CreateUserService()
 
     def post(self, request: Any) -> Response:
         serializer = self.get_serializer(data=request.data)
@@ -25,7 +24,7 @@ class UserRegisterAPIView(GenericAPIView[User]):
 
         validated_data = serializer.validated_data
 
-        user = self.user_service.create_user(validated_data)
+        user = CreateUserService.create_user(validated_data)
 
         email_service = EmailService(user, request)
         email_service.send_register_mail()
