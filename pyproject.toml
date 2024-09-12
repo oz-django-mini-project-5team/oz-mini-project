@@ -38,7 +38,7 @@ module = "manage"
 ignore_errors = true
 
 [tool.coverage.report]
-fail_under = 50
+fail_under = 80
 
 [tool.coverage.run]
 omit = [
