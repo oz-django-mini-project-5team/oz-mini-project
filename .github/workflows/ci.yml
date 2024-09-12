@@ -59,16 +59,12 @@ jobs:
         run: |
           poetry run mypy .
           
-      - name: Migrate database
-        run: |
-          poetry run python manage.py migrate
-
       - name: Wait for PostgreSQL
         run: |
-          until pg_isready -h localhost -p ${{ secrets.DB_PORT }} -U ${{ secrets.PG_USER }}; do
+          until pg_isready -h localhost -p 5432 -U postgres; do
             sleep 1
           done
-
+          
       - name: Test python project
         run: |
           poetry run coverage run manage.py test
