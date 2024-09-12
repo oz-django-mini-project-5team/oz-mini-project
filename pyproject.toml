@@ -23,7 +23,10 @@ django-stubs = "5.0.4"
 djangorestframework-stubs = "^3.15.1"
 
 [tool.black]
-line-length = 120
+line-length = 150
+
+[tool.isort]
+profile = "black"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
