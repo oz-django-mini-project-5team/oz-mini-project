@@ -58,6 +58,10 @@ jobs:
       - name: Run Mypy
         run: |
           poetry run mypy .
+          
+      - name: Migrate database
+        run: |
+          poetry run python manage.py migrate
 
       - name: Wait for PostgreSQL
         run: |
