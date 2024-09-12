@@ -11,7 +11,8 @@ from users.models import User
 from users.serializers.jwt_serializer import UserLoginSerializer
 from users.serializers.user_serializer import UserRegisterSerializer
 from users.services.create_user_service import CreateUserService
-from users.services.send_mail_service import CommonDecodeSignerUser, EmailService
+from users.services.send_mail_service import (CommonDecodeSignerUser,
+                                              EmailService)
 
 
 class UserRegisterAPIView(GenericAPIView[User]):
