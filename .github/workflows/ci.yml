@@ -64,9 +64,13 @@ jobs:
           until pg_isready -h localhost -p ${{ secrets.DB_PORT }} -U ${{ secrets.PG_USER }}; do
             sleep 1
           done
+
+      - name: Run Django Migration
+        run: |
+          poetry run python manage.py makemigrations
+          poetry run python manage.py migrate
           
       - name: Test python project
         run: |
-          export DATABASE_URL=postgres://${{ secrets.PG_USER }}:${{ secrets.PG_PASSWORD }}@localhost:5432/${{ secrets.PG_NAME }}
           poetry run coverage run manage.py test
           poetry run coverage report -m
