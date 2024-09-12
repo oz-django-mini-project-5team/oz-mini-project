@@ -25,6 +25,9 @@
 ## ERD
 <img src="static/readme/oz-mini-project-erd.png" style="width:650px">
 
+## User Flow Chart
+<img src="static/readme/user-flow-chart.drawio.png" style="width:650px">
+
 ## API 명세서
 
 ## 프로젝트 구조
