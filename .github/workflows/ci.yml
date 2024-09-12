@@ -29,9 +29,9 @@ jobs:
 
       - name: Setup python environment
         id: setup-python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.12
+          python-version: 3.12.5
 
       - name: Set timezone to KST
         run: |
