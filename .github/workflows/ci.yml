@@ -67,8 +67,8 @@ jobs:
 
       - name: Run Django Migration
         run: |
-          poetry run python manage.py makemigrations
-          poetry run python manage.py migrate
+          poetry run python3 manage.py makemigrations
+          poetry run python3 manage.py migrate
 
       - name: Test python project
         run: |
