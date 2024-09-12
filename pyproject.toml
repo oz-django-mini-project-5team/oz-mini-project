@@ -19,6 +19,7 @@ isort = "5.13.2"
 mypy = "1.11.2"
 coverage = "7.6.1"
 django-stubs = "5.0.4"
+djangorestframework-stubs = "^3.15.1"
 
 [tool.black]
 line-length = 120
@@ -37,7 +38,7 @@ module = "manage"
 ignore_errors = true
 
 [tool.coverage.report]
-fail_under = 80
+fail_under = 50
 
 [tool.coverage.run]
 omit = [

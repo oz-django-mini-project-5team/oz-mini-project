@@ -20,6 +20,8 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "accounts.apps.AccountsConfig",
     "transaction_history.apps.TransactionHistoryConfig",
+    # libraries
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
