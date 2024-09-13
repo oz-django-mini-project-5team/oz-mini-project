@@ -8,7 +8,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY", "asdfasdfgsadgsdah231ty12t1")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -110,5 +110,5 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,
     "TOKEN_USER_CLASS": "users.User",
-    "SIGNING_KEY": os.getenv("SECRET_KEY"),
+    "SIGNING_KEY": SECRET_KEY,
 }
