@@ -12,6 +12,7 @@ djangorestframework = "3.15.2"
 python-dotenv = "1.0.1"
 psycopg2 = "2.9.9"
 drf-spectacular = "0.27.2"
+djangorestframework-simplejwt = "^5.3.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "24.8.0"
@@ -19,9 +20,13 @@ isort = "5.13.2"
 mypy = "1.11.2"
 coverage = "7.6.1"
 django-stubs = "5.0.4"
+djangorestframework-stubs = "^3.15.1"
 
 [tool.black]
-line-length = 120
+line-length = 150
+
+[tool.isort]
+profile = "black"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
