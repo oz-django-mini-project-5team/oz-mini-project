@@ -1,22 +1,28 @@
-from typing import Optional
+from typing import Any, Optional
 
 from rest_framework import status, viewsets
-from rest_framework.decorators import action
-from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
 
-from .models import TransactionHistory
-from .serializers import TransactionHistorySerializer
+from transaction_history.models import TransactionHistory
+from transaction_history.serializers import TransactionHistorySerializer
 
 
-class TransactionHistoryViewSet(ModelViewSet[TransactionHistory]):  # 제네릭 타입 추가
+class TransactionHistoryViewSet(viewsets.ModelViewSet[TransactionHistory]):
     queryset = TransactionHistory.objects.all()
-    serializer_class: type[TransactionHistorySerializer] = TransactionHistorySerializer
+    serializer_class = TransactionHistorySerializer
 
-    @action(detail=True, methods=["delete"], url_path="delete")
-    def delete_transaction(self, request: Request, pk: Optional[str] = None) -> Response:  # Optional[str] 추가
-        """입출금 기록 삭제 기능"""
+    def create(self, request: Any, *args: Any, **kwargs: Any) -> Response:
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def retrieve(self, request: Any, pk: Optional[str] = None) -> Response:
+        transaction: TransactionHistory = self.get_object()
+        serializer = self.get_serializer(transaction)
+        return Response(serializer.data)
+
+    def destroy(self, request: Any, pk: Optional[str] = None) -> Response:
         transaction: TransactionHistory = self.get_object()
         transaction.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

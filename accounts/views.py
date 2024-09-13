@@ -1,29 +1,35 @@
-from typing import Optional, Type
+from typing import Any, Optional
 
 from rest_framework import status, viewsets
-from rest_framework.decorators import action
-from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.serializers import BaseSerializer
-from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
 
-from .models import Account
-from .serializers import AccountCreateSerializer, AccountSerializer
+from accounts.models import Account
+from accounts.serializers import AccountSerializer
 
 
-class AccountViewSet(ModelViewSet[Account]):  # 제네릭 타입 추가
+class AccountViewSet(viewsets.ModelViewSet[Account]):
     queryset = Account.objects.all()
+    serializer_class = AccountSerializer
 
-    def get_serializer_class(self) -> Type[BaseSerializer[Account]]:  # BaseSerializer에 제네릭 추가
-        """생성 시 AccountCreateSerializer, 조회 시 AccountSerializer 사용"""
-        if self.action == "create":
-            return AccountCreateSerializer
-        return AccountSerializer
+    def create(self, request: Any, *args: Any, **kwargs: Any) -> Response:
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    @action(detail=True, methods=["delete"], url_path="delete")
-    def delete_account(self, request: Request, pk: Optional[str] = None) -> Response:  # Optional[str] 추가
-        """계좌 삭제 기능"""
+    def retrieve(self, request: Any, pk: Optional[str] = None) -> Response:
+        account: Account = self.get_object()
+        serializer = self.get_serializer(account)
+        return Response(serializer.data)
+
+    def update(self, request: Any, pk: Optional[str] = None) -> Response:
+        account: Account = self.get_object()
+        serializer = self.get_serializer(account, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+    def destroy(self, request: Any, pk: Optional[str] = None) -> Response:
         account: Account = self.get_object()
         account.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

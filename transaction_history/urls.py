@@ -1,13 +1,17 @@
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
+from typing import List
 
-from .views import TransactionHistoryViewSet
+from django.urls import path
+from django.urls.resolvers import URLPattern
 
-# 라우터 설정
-router = DefaultRouter()
-router.register(r"", TransactionHistoryViewSet, basename="transaction")
+from transaction_history.views import TransactionHistoryViewSet
 
-# URL 패턴 설정
-urlpatterns = [
-    path("", include(router.urls)),
+transaction_list = TransactionHistoryViewSet.as_view({"get": "list", "post": "create"})
+
+transaction_detail = TransactionHistoryViewSet.as_view({"get": "retrieve", "delete": "destroy"})
+
+urlpatterns: List[URLPattern] = [
+    path("create/", transaction_list, name="transaction-create"),
+    path("", transaction_list, name="transaction-list"),
+    path("<int:pk>/", transaction_detail, name="transaction-detail"),
+    path("<int:pk>/delete/", transaction_detail, name="transaction-delete"),
 ]

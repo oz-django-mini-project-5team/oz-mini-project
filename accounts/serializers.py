@@ -1,21 +1,19 @@
+from typing import Any
+
 from rest_framework import serializers
 
-from .models import Account
+from accounts.models import Account
 
 
-class AccountSerializer(serializers.ModelSerializer[Account]):  # 제네릭 타입 추가
-    account_number: serializers.SerializerMethodField = serializers.SerializerMethodField()  # 타입 파라미터 제거
-
+class AccountSerializer(serializers.ModelSerializer[Account]):
     class Meta:
         model: type[Account] = Account
-        fields: list[str] = ["user", "account_number", "bank_code", "account_type", "balance"]
+        fields: list[str] = ["id", "user", "account_number", "bank_code", "account_type", "balance"]
 
-    def get_account_number(self, obj: Account) -> str:
-        # 계좌 번호 마지막 4자리 마스킹
-        return obj.account_number[:-4] + "****"
+    def update(self, instance: Account, validated_data: dict[str, Any]) -> Account:  # 제네릭 타입 추가
+        instance.bank_code = validated_data.get("bank_code", instance.bank_code)
+        instance.account_type = validated_data.get("account_type", instance.account_type)
+        instance.balance = validated_data.get("balance", instance.balance)
+        instance.save()
+        return instance
 
-
-class AccountCreateSerializer(serializers.ModelSerializer[Account]):  # 제네릭 타입 추가
-    class Meta:
-        model: type[Account] = Account
-        fields: list[str] = ["user", "account_number", "bank_code", "account_type", "balance"]

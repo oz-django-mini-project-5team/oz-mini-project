@@ -1,13 +1,18 @@
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
+from typing import List
 
-from .views import AccountViewSet
+from django.urls import path
+from django.urls.resolvers import URLPattern
 
-# 라우터 설정
-router = DefaultRouter()
-router.register(r"", AccountViewSet, basename="account")
+from accounts.views import AccountViewSet
 
-# URL 패턴 설정
-urlpatterns = [
-    path("", include(router.urls)),
+account_list = AccountViewSet.as_view({"get": "list", "post": "create"})
+
+account_detail = AccountViewSet.as_view({"get": "retrieve", "put": "update", "patch": "partial_update", "delete": "destroy"})
+
+urlpatterns: List[URLPattern] = [
+    path("create/", account_list, name="account-create"),
+    path("", account_list, name="account-list"),
+    path("<int:pk>/", account_detail, name="account-detail"),
+    path("<int:pk>/update/", account_detail, name="account-update"),
+    path("<int:pk>/delete/", account_detail, name="account-delete"),
 ]

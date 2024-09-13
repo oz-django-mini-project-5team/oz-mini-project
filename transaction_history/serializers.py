@@ -1,11 +1,19 @@
-from typing import Union
-
 from rest_framework import serializers
 
-from .models import TransactionHistory
+from transaction_history.models import TransactionHistory
 
 
 class TransactionHistorySerializer(serializers.ModelSerializer[TransactionHistory]):
     class Meta:
         model: type[TransactionHistory] = TransactionHistory
-        fields: Union[list[str], str] = "__all__"  # 리스트 또는 문자열을 허용
+        fields: list[str] = [
+            "id",
+            "account",
+            "transaction_amount",
+            "transaction_type",
+            "balance_after_transaction",
+            "deposit_withdrawal_type",
+            "transaction_description",
+            "transaction_date",
+            "transaction_time",
+        ]
