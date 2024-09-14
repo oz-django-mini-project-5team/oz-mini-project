@@ -1,18 +1,13 @@
-from typing import List
+# type: ignore
+
 
 from django.urls import path
-from django.urls.resolvers import URLPattern
 
-from accounts.views import AccountViewSet
+from accounts import views
 
-account_list = AccountViewSet.as_view({"get": "list", "post": "create"})
-
-account_detail = AccountViewSet.as_view({"get": "retrieve", "put": "update", "patch": "partial_update", "delete": "destroy"})
-
-urlpatterns: List[URLPattern] = [
-    path("create/", account_list, name="account-create"),
-    path("", account_list, name="account-list"),
-    path("<int:pk>/", account_detail, name="account-detail"),
-    path("<int:pk>/update/", account_detail, name="account-update"),
-    path("<int:pk>/delete/", account_detail, name="account-delete"),
+urlpatterns = [
+    path("", views.AccountAPIView.as_view(), name="accounts"),
+    path("<int:id>", views.AccountDetailAPIView.as_view(), name="account_delete"),
+    path("create", views.AccountCreateAPIView.as_view(), name="account_create"),
+    path("deposit-withdrawal", views.AccountUpdateAPIView.as_view(), name="account_deposit_withdrawal"),
 ]
