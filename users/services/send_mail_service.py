@@ -26,7 +26,7 @@ class EmailService:
         return signer_dump
 
     def get_url(self, uri: str) -> str:
-        link = f"/api/v1/users/{uri}/?code={self.signer()}"
+        link = f"/users/{uri}/?code={self.signer()}"
         return f"{self.request.scheme}://{self.request.get_host()}{link}"
 
     def send_email(self, subject: str, message: str) -> None:
