@@ -15,4 +15,4 @@ elif os.environ.get("ENV_NAME") == "Development":
 
 else:
     from miniproject.settings.base import *
-    from miniproject.settings.development import *
+    from miniproject.settings.production import *
